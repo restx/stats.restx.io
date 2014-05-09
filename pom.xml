@@ -49,7 +49,7 @@
         </dependency>
         <dependency>
             <groupId>io.restx</groupId>
-            <artifactId>restx-logs-admin</artifactId>
+            <artifactId>restx-log-admin</artifactId>
             <version>${restx.version}</version>
         </dependency>
         <dependency>
