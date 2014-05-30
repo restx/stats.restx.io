@@ -1,5 +1,8 @@
 package restx.stats.central;
 
+import com.google.common.base.Optional;
+import com.google.common.collect.Iterables;
+import restx.annotations.GET;
 import restx.annotations.POST;
 import restx.annotations.RestxResource;
 import restx.factory.Component;
@@ -26,5 +29,14 @@ public class StatsResource {
     @POST("/v1/stats")
     public void addStats(RestxStats stats) {
         statsCollection.get().save(stats);
+    }
+
+    @PermitAll
+    @GET("/v1/stats/app/:appNameHash")
+    public Optional<RestxStats> findStats(String appNameHash) {
+        return Optional.fromNullable(Iterables.getFirst(
+                statsCollection.get().find("{appNameHash: #}", appNameHash)
+                        .sort("{timestamp: -1}").limit(1).as(RestxStats.class),
+                null));
     }
 }
